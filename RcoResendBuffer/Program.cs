@@ -24,7 +24,7 @@ namespace RcoResendBuffer
                     services.AddHttpClient();
                     services.AddTransient<AuthContext>();
                     services.AddSingleton<QueueWorkerService>();
-                    services.AddHostedService<QueueWorkerService>(provider =>  provider.GetService<QueueWorkerService>());
+                    services.AddHostedService<QueueWorkerService>();
 
                 })
                 .UseContentRoot(AppDomain.CurrentDomain.BaseDirectory)
