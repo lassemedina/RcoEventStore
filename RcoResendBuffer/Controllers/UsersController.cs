@@ -2,6 +2,7 @@
 using RcoResendBuffer.Context;
 using RcoResendBuffer.Models;
 using RcoResendBuffer.Service;
+using System.Threading.Tasks;
 
 namespace RcoResendBuffer.Controllers
 {
@@ -18,12 +19,12 @@ namespace RcoResendBuffer.Controllers
             _queueWorkerService = queueWorkerService;
         }
 
-        public IActionResult Get()
+        public async Task<IActionResult>  Get()
         {
             var user = new User { Age = 31, Email = "la@rco.se", FirstName = "Leo", LastName = "King" };
             _queueWorkerService.AddMessage(user, "users");
             _authContext.Users.Add(user);
-            var i = _authContext.SaveChanges();
+            var i = await _authContext.SaveChangesAsync();
             if (i > 0)
                 _queueWorkerService.Submit();
             return Ok( _authContext.Users); 

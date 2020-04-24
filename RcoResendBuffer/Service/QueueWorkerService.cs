@@ -96,16 +96,16 @@ namespace RcoResendBuffer.Service
                         else
                         {
                             _logger.LogInformation($"Procces message {dbMsg.Id}");
-                            var http = _httpClientFactory.CreateClient();
-                            await http.GetAsync("http://lassem.se").ContinueWith(res =>
-                            {
-                                if (res.Result.StatusCode == System.Net.HttpStatusCode.NotFound)
-                                {
+                            //var http = _httpClientFactory.CreateClient();
+                            //await http.GetAsync("http://lassem.se").ContinueWith(res =>
+                            //{
+                              //  if (res.Result.StatusCode == System.Net.HttpStatusCode.NotFound)
+                                //{
                                     var msg = dbContext.AuthSyncMessages.FirstOrDefault(a => a.Id == dbMsg.Id);
                                     dbContext.AuthSyncMessages.Remove(msg);
-                                    dbContext.SaveChangesAsync();
-                                }
-                            });
+                                    await dbContext.SaveChangesAsync();
+                                //}
+                            //});
                         }
                     }
                 }
